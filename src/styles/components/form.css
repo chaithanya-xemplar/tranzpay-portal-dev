@@ -1,0 +1,157 @@
+/* ============================================================
+   Form controls
+
+   .input-base-form is the shared control surface for the whole
+   portal — Input, TextArea, Select, Combobox, SecretInput,
+   TimePicker, PersonFields, AddressBlock and every page-level
+   <input> all route through it.
+
+   It is driven entirely by the --control-* tokens declared in
+   ../global.css. Adjust those tokens, not the rules below, to
+   restyle inputs portal-wide.
+
+   .input-base is the older, taller variant used only by the auth
+   pages (login / forgot-password / reset-password) and is
+   deliberately left on its own treatment.
+   ============================================================ */
+
+.input-base {
+    @apply w-full pr-4 py-2 h-12 text-sm text-medium-grey font-semibold border rounded-md focus:outline-none focus:ring-1 focus:ring-light-grey;
+}
+
+.input-base.error {
+  @apply border-error focus:ring-0;
+}
+
+/* ────────── Shared control surface ────────── */
+
+.input-base-form {
+  width: 100%;
+  height: var(--control-h-44);
+  padding: 0 var(--control-px-14);
+  font-family: inherit;
+  font-size: var(--control-fs-14);
+  font-weight: var(--control-fw-400);
+  color: var(--control-text);
+  background: var(--control-fill);
+  border: 1px solid var(--control-border);
+  border-radius: var(--control-radius-6);
+  outline: none;
+  transition: var(--control-transition);
+}
+
+/* Placeholders — lighter + italic, site-wide (matches the design prototype).
+   Element-level on purpose: it covers .input-base-form, the auth-page
+   .input-base and any bare input/textarea alike.
+   opacity:1 is required — Firefox dims placeholders by default. */
+input::placeholder,
+textarea::placeholder {
+  color: var(--control-placeholder);
+  font-style: var(--control-placeholder-style);
+  font-weight: var(--control-fw-400);
+  opacity: 1;
+}
+
+.input-base-form:focus {
+  border-color: var(--control-border-focus);
+  background: var(--control-fill-focus);
+}
+
+/* Inert states. Several forms previously hand-rolled this as
+   "bg-gray-100 cursor-not-allowed" per call site; it lives here now. */
+.input-base-form:disabled,
+.input-base-form[readonly] {
+  background: var(--control-fill-disabled);
+  color: var(--control-text-disabled);
+  cursor: not-allowed;
+}
+
+/* A readonly field must not light up on focus like an editable one. */
+.input-base-form[readonly]:focus {
+  border-color: var(--control-border);
+  background: var(--control-fill-disabled);
+}
+
+/* Error last, so it outranks both :focus and the inert states. */
+.input-base-form.error,
+.input-base-form.error:focus,
+.input-base-form.error[readonly],
+.input-base-form.error[readonly]:focus {
+  border-color: var(--control-border-error);
+  background: var(--control-fill-focus);
+}
+
+/* Textareas size to content rather than a fixed control height. */
+textarea.input-base-form {
+  height: auto;
+  padding: var(--control-py-12) var(--control-px-14);
+  resize: vertical;
+}
+
+/* ────────── Native select ────────── */
+
+/* Positioning context for the caret / adornments. */
+.select-wrapper {
+  position: relative;
+}
+
+.select-custom {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 38px;
+  background-image: url("../../assets/icon-arrow-down.svg");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+/* Placeholder option selected — render like ::placeholder, since a select
+   showing its empty option is a placeholder in everything but markup. */
+.select-custom:has(option[value=""]:checked) {
+  color: var(--control-placeholder);
+  font-style: var(--control-placeholder-style);
+}
+
+/* Real options are never italic, even while the closed select is. */
+.select-custom option {
+  font-size: var(--control-fs-14);
+  font-weight: var(--control-fw-400);
+  font-style: normal;
+  color: var(--control-text);
+}
+
+/* ────────── Label / helper / error text ────────── */
+
+.label-base {
+  display: block;
+  padding-bottom: 4px;
+  font-size: var(--control-label-fs-13);
+  font-weight: var(--control-label-fw-500);
+  color: var(--control-label-color);
+}
+
+.error-base {
+  margin-top: 4px;
+  font-size: var(--control-hint-fs-12);
+  color: var(--color-error);
+}
+
+.helper-base {
+  font-size: var(--control-hint-fs-12);
+  color: var(--color-light-grey);
+}
+
+/* ────────── Number input — hide native spinners ────────── */
+
+/* Chrome, Safari, Edge */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield !important;
+}

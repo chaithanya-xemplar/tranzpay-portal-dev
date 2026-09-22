@@ -1,0 +1,18 @@
+<svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="34" cy="34" r="34" fill="url(#paint0_linear_1779_11887)"/>
+<path d="M39.2938 46.3631H45.4843C46.4511 46.3631 47.2421 45.572 47.2421 44.6053V26.9104H20.7578V44.6053C20.7578 45.572 21.5488 46.3631 22.5156 46.3631H28.7061" stroke="#16A34A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M34 23.3943V19.8788" stroke="#16A34A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M28.1403 23.3943V19.8788" stroke="#16A34A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M39.8596 23.3943V19.8788" stroke="#16A34A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M45.4843 21.637H22.5156C21.5488 21.637 20.7578 22.428 20.7578 23.3948V26.9106H47.2421V23.3948C47.2421 22.428 46.4511 21.637 45.4843 21.637Z" stroke="#16A34A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M42.8474 39.2735C42.8474 44.16 38.8863 48.1211 33.9999 48.1211C29.1136 48.1211 25.1525 44.16 25.1525 39.2735C25.1525 34.3872 29.1136 30.4261 33.9999 30.4261C38.8863 30.4261 42.8474 34.3872 42.8474 39.2735Z" stroke="#16A34A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M35.8724 36.7267C35.7521 36.6362 34.7203 35.7583 33.3618 36.1674C32.1144 36.5433 31.94 37.9817 32.8423 38.57C32.8423 38.57 33.7279 38.965 34.7101 39.3273C37.0746 40.1996 36.056 42.4869 34.1526 42.4869C33.1995 42.4869 32.0455 41.721 31.9153 41.5352" stroke="#16A34A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M33.9053 36.0602V34.8203" stroke="#16A34A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M34 43.7268V42.487" stroke="#16A34A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<defs>
+<linearGradient id="paint0_linear_1779_11887" x1="9.03125" y1="11.1563" x2="52.0625" y2="62.1563" gradientUnits="userSpaceOnUse">
+<stop stop-color="#DAFFE4"/>
+<stop offset="1" stop-color="white"/>
+</linearGradient>
+</defs>
+</svg>

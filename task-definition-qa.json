@@ -1,0 +1,35 @@
+{
+  "family": "tranzpay-portal-task-qa",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::991862549203:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "tranzpay-portal-container-qa",
+      "image": "991862549203.dkr.ecr.us-east-1.amazonaws.com/tranzpay-portal-service-qa:latest",
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "environment": [
+        {
+          "name": "NODE_ENV",
+          "value": "qa"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/tranzpay-portal-task-qa",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

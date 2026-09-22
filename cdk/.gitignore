@@ -1,0 +1,13 @@
+# Deployment files
+node_modules/
+cdk.out/
+*.d.ts
+*.js
+*.js.map
+
+# CDK specific
+.cdk.staging/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,12 @@
+# Docker
+node_modules
+dist
+build
+*.log
+
+# CDK
+cdk/node_modules
+cdk/cdk.out
+cdk/*.js
+cdk/*.d.ts
+cdk/*.js.map

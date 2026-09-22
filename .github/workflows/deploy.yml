@@ -1,0 +1,131 @@
+name: Deploy to AWS ECS
+
+on:
+  push:
+    branches: [dev, qa, OPS-127] # Add branches you want to auto-deploy
+  workflow_dispatch: # Allow manual triggering
+
+env:
+  AWS_REGION: us-east-1
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read # This is required for actions/checkout
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set environment variables
+        id: set-env
+        run: |
+          if [[ "${{ github.ref_name }}" == "qa" ]]; then
+            echo "ECR_REPOSITORY=tranzpay-portal-service-qa" >> $GITHUB_ENV
+            echo "ECS_SERVICE=tranzpay-portal-service-qa" >> $GITHUB_ENV
+            echo "ECS_CLUSTER=tranzpay-portal-cluster-qa" >> $GITHUB_ENV
+            echo "ECS_TASK_DEFINITION=tranzpay-portal-task-qa" >> $GITHUB_ENV
+            echo "ENVIRONMENT=qa" >> $GITHUB_ENV
+          else
+            echo "ECR_REPOSITORY=tranzpay-portal-service-dev" >> $GITHUB_ENV
+            echo "ECS_SERVICE=tranzpay-portal-service-dev" >> $GITHUB_ENV
+            echo "ECS_CLUSTER=tranzpay-portal-cluster-dev" >> $GITHUB_ENV
+            echo "ECS_TASK_DEFINITION=tranzpay-portal-task-dev" >> $GITHUB_ENV
+            echo "ENVIRONMENT=dev" >> $GITHUB_ENV
+          fi
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build React app
+        run: npm run build:${{ env.ENVIRONMENT }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          # Build a docker container and push it to ECR
+          docker build --build-arg BUILD_SCRIPT=build:${{ env.ENVIRONMENT }} -t $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG
+
+          # Also tag as latest
+          docker tag $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:latest
+          docker push $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:latest
+
+          echo "image=$ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Update ECS task definition
+        id: task-def
+        run: |
+          # Update task definition with new image
+          TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK_DEFINITION }} --query taskDefinition)
+
+          # Remove fields that aren't needed for registration
+          NEW_TASK_DEFINITION=$(echo $TASK_DEFINITION | jq 'del(.taskDefinitionArn) | del(.revision) | del(.status) | del(.requiresAttributes) | del(.placementConstraints) | del(.compatibilities) | del(.registeredAt) | del(.registeredBy)')
+
+          # Update the image in the task definition
+          NEW_TASK_DEFINITION=$(echo $NEW_TASK_DEFINITION | jq --arg IMAGE "${{ steps.build-image.outputs.image }}" '.containerDefinitions[0].image = $IMAGE')
+
+          # Save to file
+          echo $NEW_TASK_DEFINITION > task-definition.json
+
+      - name: Display deployment info
+        run: |
+          echo "Deploying to ${{ env.ENVIRONMENT }} environment"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Cluster: ${{ env.ECS_CLUSTER }}"
+          echo "Service: ${{ env.ECS_SERVICE }}"
+          echo "Task Definition: ${{ env.ECS_TASK_DEFINITION }}"
+
+      - name: Deploy Amazon ECS task definition
+        run: |
+          # Register new task definition
+          NEW_TASK_DEF_ARN=$(aws ecs register-task-definition --cli-input-json file://task-definition.json --query 'taskDefinition.taskDefinitionArn' --output text)
+
+          # Update the service to use the new task definition
+          aws ecs update-service --cluster ${{ env.ECS_CLUSTER }} --service ${{ env.ECS_SERVICE }} --task-definition $NEW_TASK_DEF_ARN --force-new-deployment
+
+          echo "Deployment initiated to ${{ env.ENVIRONMENT }} environment"
+          echo "New task definition: $NEW_TASK_DEF_ARN"
+
+      - name: Wait for service stability
+        run: |
+          echo "Waiting for ${{ env.ENVIRONMENT }} service to become stable..."
+          aws ecs wait services-stable --cluster ${{ env.ECS_CLUSTER }} --services ${{ env.ECS_SERVICE }}
+          echo "${{ env.ENVIRONMENT }} service is now stable!"
+
+      - name: Get service status
+        run: |
+          echo "=== ${{ env.ENVIRONMENT }} Service Status ==="
+          aws ecs describe-services --cluster ${{ env.ECS_CLUSTER }} --services ${{ env.ECS_SERVICE }} --query 'services[0].{Status:status,RunningCount:runningCount,PendingCount:pendingCount,DesiredCount:desiredCount}'
+          
+          if [[ "${{ env.ENVIRONMENT }}" == "qa" ]]; then
+            echo ""
+            echo "QA deployment complete! Access at: https://portal.qa.tranzpay.com"
+          else
+            echo ""
+            echo "Dev deployment complete!"
+          fi
