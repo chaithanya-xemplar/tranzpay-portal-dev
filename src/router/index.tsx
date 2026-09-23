@@ -7,6 +7,10 @@ import ResetPasswordPage from "../pages/reset-password/ResetPasswordPage";
 import MainLayout from "../layouts/MainLayout";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 
+import AccountsListPage from "../pages/accounts/AccountsListPage";
+import CreateAccountPage from "../pages/accounts/CreateAccountPage";
+import AccountDetailsPage from "../pages/accounts/AccountDetailsPage";
+
 import CorpsListPage from "../pages/corps/CorpsListPage";
 import CreateCorpPage from "../pages/corps/CreateCorpPage";
 import CorpDetailsPage from "../pages/corps/CorpDetailsPage";
@@ -71,6 +75,10 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <DashboardPage /> },
           { path: "profile", element: <ProfilePage /> },
+          /* ---------------- ACCOUNTS ---------------- */
+          { path: "accounts", element: <AccountsListPage /> },
+          { path: "accounts/create", element: <CreateAccountPage /> },
+          { path: "accounts/:id", element: <AccountDetailsPage /> },
 
           /* ---------------- CORPS ---------------- */
           { path: "corps", element: <CorpsListPage /> },

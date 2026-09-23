@@ -110,6 +110,7 @@ export const useTableData = <T extends Record<string, unknown>>(
     queryKey,
     queryFn: async ({ signal }: { signal?: AbortSignal }) => {
       if (
+        datasetKey === "accounts" ||
         datasetKey === "merchants-accounts" ||
         datasetKey === "corps-accounts" ||
         datasetKey === "producers-accounts" ||

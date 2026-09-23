@@ -15,6 +15,7 @@ const Sidebar = ({ collapsed, setCollapsed}: { collapsed: boolean; setCollapsed:
       label: "Admin",
       icon: adminSettingsIcon,
       children: [
+        { label: "Accounts", path: "/accounts" },
         { label: "Corps", path: "/corps" },
         { label: "Merchants", path: "/merchants" },
         { label: "Producers", path: "/producers" },
