@@ -12,6 +12,7 @@ import {
 import type { ProducerFormValues } from "../../schemas/producersSchema";
 import { useToast } from "../../design-system/toast/ToastContext";
 import Icon from "../../components/Icon/Icon";
+import ErrorBoundaryPage from "../../components/ErrorBoundaryPage";
 
 
 export default function ProducerDetailsPage() {
@@ -35,6 +36,7 @@ export default function ProducerDetailsPage() {
     data: initialValues,
     isLoading,
     isError,
+    error,
     refetch,
   } = useGetProducer(producerId);
 
@@ -99,12 +101,13 @@ export default function ProducerDetailsPage() {
 
   if (isError || !initialValues) {
     return (
-      <div className="p-4">
-        <div className="mb-2 text-red-600 font-medium">
-          Failed to load producer.
-        </div>
-        <Button onClick={() => refetch()}>Retry</Button>
-      </div>
+      <ErrorBoundaryPage
+        error={error}
+        title="Failed to load producer"
+        onReload={() => refetch()}
+        onSecondaryClick={() => navigate("/producers")}
+        secondaryActionLabel="Back to Producers"
+      />
     );
   }
 

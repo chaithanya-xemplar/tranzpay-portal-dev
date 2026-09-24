@@ -1,21 +1,35 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import GlobalProcessorConfigForm from "../../components/processor/GlobalProcessorConfigForm";
+import ProcessorAdditionalUrlsSection from "../../components/processor/ProcessorAdditionalUrlsSection";
+import ErrorBoundaryPage from "../../components/ErrorBoundaryPage";
 
 import {
   useProcessorDetails,
   mapProcessorApiToFormValues,
 } from "../../services/processors/processorsApi";
-import ProcessorAdditionalUrlsSection from "../../components/processor/ProcessorAdditionalUrlsSection";
 
 const ProcessorDetailsPage = () => {
   const { id } = useParams();
   const processorId = Number(id);
+  const navigate = useNavigate();
 
   /* ✅ Fetch Processor */
-  const { data, isLoading, isFetching } = useProcessorDetails(processorId);
+  const { data, isLoading, isFetching, isError, error, refetch } =
+    useProcessorDetails(processorId);
 
   if (isLoading || isFetching) return <p>Loading...</p>;
-  if (!data) return <p>Processor Not Found</p>;
+
+  if (isError || !data) {
+    return (
+      <ErrorBoundaryPage
+        error={error}
+        title="Failed to load processor"
+        onReload={() => refetch()}
+        onSecondaryClick={() => navigate("/processors")}
+        secondaryActionLabel="Back to Processors"
+      />
+    );
+  }
 
   return (
     <>

@@ -7,6 +7,7 @@ import { getMerchant, useGetMerchant } from "../../services/merchants/merchantAp
 import { useQuery } from "@tanstack/react-query";
 // import { useToast } from "../../design-system/toast/ToastContext";
 import Icon from "../../components/Icon/Icon";
+import ErrorBoundaryPage from "../../components/ErrorBoundaryPage";
 
 type MerchantTab = "info" | "producers" | "processors";
 
@@ -26,7 +27,7 @@ export default function MerchantDetailsPage() {
       ? "processors"
       : "info";
 
-  const { data: initialValues, isLoading, isError, refetch } =
+  const { data: initialValues, isLoading, isError, error, refetch } =
     useGetMerchant(merchantId);
 
   const { data: merchantApiMetaData } = useQuery({
@@ -48,14 +49,17 @@ export default function MerchantDetailsPage() {
       </Card>
     );
 
-  if (isError) return <Button onClick={() => refetch()}>Retry</Button>;
-
-  if (!initialValues)
+  if (isError || !initialValues) {
     return (
-      <Card>
-        <div className="p-6 text-red-500">Merchant not found.</div>
-      </Card>
+      <ErrorBoundaryPage
+        error={error}
+        title="Failed to load merchant"
+        onReload={() => refetch()}
+        onSecondaryClick={() => navigate("/merchants")}
+        secondaryActionLabel="Back to Merchants"
+      />
     );
+  }
 
   return (
     <div>

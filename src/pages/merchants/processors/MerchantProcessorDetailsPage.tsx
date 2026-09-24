@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useToast } from "../../../design-system/toast/ToastContext";
 import MerchantProcessorForm from "./MerchantProcessorForm";
+import ErrorBoundaryPage from "../../../components/ErrorBoundaryPage";
 import {
   useGetMerchantProcessor,
   useUpdateMerchantProcessor
@@ -31,7 +32,7 @@ export default function MerchantProcessorDetailsPage() {
 
   /* ---------------- GET ---------------- */
 
-  const { data, isLoading } =
+  const { data, isLoading, isError, error, refetch } =
     useGetMerchantProcessor(
       merchantId,
       paymentProcessorCompanyId
@@ -71,6 +72,18 @@ export default function MerchantProcessorDetailsPage() {
   };
 
   if (isLoading) return <div>Loading...</div>;
+
+  if (isError || !rawProcessoredData) {
+    return (
+      <ErrorBoundaryPage
+        error={error}
+        title="Failed to load processor configuration"
+        onReload={() => refetch()}
+        onSecondaryClick={() => navigate(`/merchants/${merchantId}/processors`)}
+        secondaryActionLabel="Back to Processors"
+      />
+    );
+  }
 
   return (
     <MerchantProcessorForm

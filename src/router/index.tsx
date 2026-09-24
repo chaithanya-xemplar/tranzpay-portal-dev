@@ -44,7 +44,7 @@ import MerchantInfoTab from "../pages/merchants/tabs/MerchantInfoTab";
 import MerchantProducersTab from "../pages/merchants/tabs/MerchantProducersTab";
 import MerchantProcessorDetailsPage from "../pages/merchants/processors/MerchantProcessorDetailsPage";
 import ProfilePage from "../pages/profile/ProfilePage";
-import ErrorPage from "../components/ErrorPage";
+import ErrorBoundaryPage from "../components/ErrorBoundaryPage";
 import OnboardingListPage from "../pages/onboarding/OnboardingListPage";
 
 const router = createBrowserRouter([
@@ -69,9 +69,7 @@ const router = createBrowserRouter([
     children: [
       {
         element: <MainLayout />,
-        errorElement: (
-          <ErrorPage title="Something went wrong" message="Unexpected error occurred" />
-        ),
+        errorElement: <ErrorBoundaryPage />,
         children: [
           { index: true, element: <DashboardPage /> },
           { path: "profile", element: <ProfilePage /> },
@@ -136,7 +134,14 @@ const router = createBrowserRouter([
           { path: "ivr", element: <IvrAccountsPage /> },
           {
             path: "*",
-            element: <ErrorPage />,
+            element: (
+              <ErrorBoundaryPage
+                code="404"
+                title="Page not found"
+                message="Sorry, we couldn’t find the page you’re looking for."
+                showReload={false}
+              />
+            ),
           },
         ],
       },

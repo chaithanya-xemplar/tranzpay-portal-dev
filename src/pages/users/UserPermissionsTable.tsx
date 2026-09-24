@@ -26,6 +26,7 @@ import { ENTITY_TYPE_OPTIONS } from "../../constants/constants";
 import { useNavigate } from "react-router-dom";
 import Icon from "../../components/Icon/Icon";
 import AddPermissionDialog from "./AddPermissionDialog";
+import ErrorBoundaryPage from "../../components/ErrorBoundaryPage";
 
 
 type PermissionColumnMeta = {
@@ -63,7 +64,7 @@ const requestPayload: GetUserPermissionsRequestDto = useMemo(() => {
   };
 }, [userId, pageIndex, pageSize, debouncedSearch, sorting, entityType]);
 
-const { data } = useUserPermissions(requestPayload);
+const { data, isError, error, refetch } = useUserPermissions(requestPayload);
 const addUpdateMutation = useAddUpdateUserRole();
 
 // const rawData: UserPermissionEntity[] = samplePermissions;
@@ -344,6 +345,18 @@ const handleSave = async () => {
 };
 
 
+
+  if (isError) {
+    return (
+      <ErrorBoundaryPage
+        error={error}
+        title="Failed to load user permissions"
+        onReload={() => refetch()}
+        onSecondaryClick={() => navigate("/users")}
+        secondaryActionLabel="Back to Users"
+      />
+    );
+  }
 
   return (
     <div >

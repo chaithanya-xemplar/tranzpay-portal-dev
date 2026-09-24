@@ -22,6 +22,7 @@ import sortUpIcon from "../../assets/icon-sort-up.svg";
 import sortDownIcon from "../../assets/icon-sort-down.svg";
 import type { QueryKey } from "@tanstack/react-query";
 import { getErrorMessage } from "../../utils/error";
+import ErrorBoundaryPage from "../ErrorBoundaryPage";
 import Spinner from "../../design-system/Spinner";
 import TableSkeleton from "./TableSkeleton";
 import ColumnsDrawer from "./ColumnsDrawer";
@@ -302,12 +303,16 @@ export default function GenericTable<T extends Record<string, unknown>>({
 
   // error state
   if (isError) {
-  return (
-    <div className="p-4 text-error">
-      {getErrorMessage(error)}
-    </div>
-  );
-}
+    return (
+      <div className="rounded-2xl border border-divider bg-white p-6 shadow-sm">
+        <ErrorBoundaryPage
+          error={error}
+          title={`Failed to load ${title || "table data"}`}
+          onReload={() => tableQuery.refetch()}
+        />
+      </div>
+    );
+  }
 
   function selectStatusFilter(value: string): void {
     if (value === "All") {

@@ -14,6 +14,7 @@ import StatusToggle from "../../components/table/StatusToggle";
 import { useToggleMerchantStatus } from "../../services/merchants/merchantApi";
 import { useToast } from "../../design-system/toast/ToastContext";
 import Icon from "../../components/Icon/Icon";
+import ErrorBoundaryPage from "../../components/ErrorBoundaryPage";
 
 const MerchantStatusCell = ({ row }: { row: Row<MerchantAccount> }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -103,11 +104,12 @@ export default function CorpDetailsPage() {
   const formRef = useRef<UseFormReturn<CorpFormValues> | null>(null);
 
   const {
-      data: initialValues,
-      isLoading,
-      isError,
-      refetch,
-    } = useGetCorp(corporateId);
+    data: initialValues,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useGetCorp(corporateId);
 
   const navigate = useNavigate();
 
@@ -157,10 +159,13 @@ export default function CorpDetailsPage() {
 
   if (isError || !initialValues) {
     return (
-      <div className="p-4">
-        <div className="mb-2 text-red-600 font-medium">Failed to load corporate.</div>
-        <Button onClick={() => refetch()}>Retry</Button>
-      </div>
+      <ErrorBoundaryPage
+        error={error}
+        title="Failed to load corporate"
+        onReload={() => refetch()}
+        onSecondaryClick={() => navigate("/corps")}
+        secondaryActionLabel="Back to Corps"
+      />
     );
   }
   
