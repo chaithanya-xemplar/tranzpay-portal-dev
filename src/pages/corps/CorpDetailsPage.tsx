@@ -138,7 +138,7 @@ export default function CorpDetailsPage() {
     return (
       <div className="p-4">
         <div className="mb-2 text-red-600 font-medium">
-          Invalid or missing corporate id in the URL. Expected /merchants/:id
+          Invalid or missing company id in the URL. Expected /corps/:id
         </div>
       </div>
     );
@@ -148,10 +148,10 @@ export default function CorpDetailsPage() {
     return (
       <div>
         <div className="flex justify-between items-center mb-4 mt-1">
-          <div className="text-lg font-bold pl-1 text-dark-grey">corporate Information</div>
+          <div className="text-lg font-bold pl-1 text-dark-grey">Company Information</div>
         </div>
         <Card>
-          <div className="animate-pulse p-6">Loading corporate</div>
+          <div className="animate-pulse p-6">Loading company</div>
         </Card>
       </div>
     );
@@ -161,10 +161,10 @@ export default function CorpDetailsPage() {
     return (
       <ErrorBoundaryPage
         error={error}
-        title="Failed to load corporate"
+        title="Failed to load company"
         onReload={() => refetch()}
         onSecondaryClick={() => navigate("/corps")}
-        secondaryActionLabel="Back to Corps"
+        secondaryActionLabel="Back to Companies"
       />
     );
   }

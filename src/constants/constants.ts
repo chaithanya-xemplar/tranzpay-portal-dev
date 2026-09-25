@@ -148,8 +148,8 @@ export const MASTER_ROLES = [
 
 export const ENTITY_TYPE_OPTIONS: SelectOption[] = [
   { label: "All", value: "All" },
-  { label: "Producer", value: "Producer" },
-  { label: "Corp", value: "Corp" },
+  { label: "Processing Profile", value: "Producer" },
+  { label: "Company", value: "Corp" },
   { label: "Merchant", value: "Merchant" },
 ];
 

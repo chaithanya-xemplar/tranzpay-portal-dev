@@ -131,8 +131,8 @@ export default function ProducersForm({
     <form onSubmit={handleSubmit(handleFormSubmit)}>
       <div className="px-4 py-4">
         <SectionTitle
-          title="Producer Information"
-          subtitle="Create and maintain the producer account details."
+          title="Processing Profile Information"
+          subtitle="Create and maintain the processing profile details."
           action={
             initialValues?.merchantId ? (
               <Controller
@@ -204,7 +204,7 @@ export default function ProducersForm({
         <section>
           <SectionTitle
             title="Personal Details"
-            subtitle="Main contact details for the producer account."
+            subtitle="Main contact details for the processing profile."
             className="mb-4"
           />
           <PersonFields
@@ -265,7 +265,7 @@ export default function ProducersForm({
         <section className="lg:border-l lg:border-divider lg:pl-5">
           <SectionTitle
             title="Address"
-            subtitle="Business mailing address for this producer."
+            subtitle="Business mailing address for this processing profile."
             className="mb-4"
           />
           <AddressBlock

@@ -104,7 +104,7 @@ export default function CorpForm({
     <form onSubmit={handleSubmit(handleFormSubmit)}>
       <div className="px-4 py-4">
         <SectionTitle
-          title="Corp Information"
+          title="Company Information"
           subtitle="Create and maintain the primary business contact details."
           action={
             initialValues?.corporateId ? (
@@ -157,7 +157,7 @@ export default function CorpForm({
       <section>
           <SectionTitle
             title="Personal Details"
-            subtitle="Main contact details for the corp account."
+            subtitle="Main contact details for the company account."
             className="mb-4"
           />
           <PersonFields
@@ -218,7 +218,7 @@ export default function CorpForm({
         <section className="lg:border-l lg:border-divider lg:pl-5">
           <SectionTitle
             title="Address"
-            subtitle="Business mailing address for this corp."
+            subtitle="Business mailing address for this company."
             className="mb-4"
           />
           <AddressBlock

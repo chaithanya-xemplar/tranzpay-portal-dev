@@ -60,7 +60,7 @@ const CorpStatusCell = ({ row }: { row: Row<CorpAccount> }) => {
       active={isActive}
       id={corporateId}
       name={displayName}
-      entityLabel="corp account"
+      entityLabel="company"
       isLoading={toggleMutation.isPending}
       onConfirm={handleConfirm}
     />
@@ -71,11 +71,11 @@ export function CorpsListPage() {
   const corpsPageCustomColumns: ColumnDef<CorpAccount>[] = [
     {
       accessorKey: "corporateId",
-      header: "Corporate ID",
+      header: "Company ID",
     },
     {
       accessorKey: "companyName",
-      header: "Name",
+      header: "Company Name",
       cell: ({ row }) => {
         const corpId = row.original.corporateId;
         const corpName = row.original.companyName;
@@ -99,7 +99,7 @@ export function CorpsListPage() {
   return (
     <div >
       <div className="mb-3 flex items-center justify-between">
-        <div className="text-lg font-bold">Corp Account List</div>
+        <div className="text-lg font-bold">Company List</div>
         <div>
           <Link to="/corps/create">
             <Button
@@ -107,7 +107,7 @@ export function CorpsListPage() {
               icon="plus"
               iconPosition="left"
             >
-              New Corp
+              New Company
             </Button>
           </Link>
         </div>
@@ -116,7 +116,7 @@ export function CorpsListPage() {
       <GenericTable<CorpAccount>
         queryKey={["corps-accounts"]}
         url="/api/v1/GetCorporates"
-        title="All Corp Accounts"
+        title="All Companies"
         customColumns={corpsPageCustomColumns}
         hiddenColumns={[]}
         showStatusFilter

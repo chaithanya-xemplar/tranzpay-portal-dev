@@ -22,11 +22,11 @@ export default function CreateCorpPage() {
         toast({
           variant: "success",
           title: "Success",
-          description: "Corporate created successfully.",
+          description: "Company created successfully.",
         });
         navigate("/corps");
       } catch (err) {
-        const message = getErrorMessage(err) || "Corporate not Created";
+        const message = getErrorMessage(err) || "Company not Created";
 
         toast({
           variant: "error",
@@ -49,12 +49,12 @@ export default function CreateCorpPage() {
             type="button"
             className="mr-2 cursor-pointer"
             onClick={() => navigate("/corps")}
-            aria-label="Back to corps"
+            aria-label="Back to companies"
           >
             <Icon name="arrow-left" size={24} />
           </button>
           <span>
-            New Corporate User
+            New Company
           </span>
         </div>
 

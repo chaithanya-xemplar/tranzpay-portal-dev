@@ -53,8 +53,8 @@ export default function ProducerDetailsPage() {
 
       toast({
         variant: "success",
-        title: "Producer Updated",
-        description: "Producer details saved successfully.",
+        title: "Processing Profile Updated",
+        description: "Processing profile details saved successfully.",
       });
     } catch (error) {
       toast({
@@ -63,7 +63,7 @@ export default function ProducerDetailsPage() {
         description:
           error instanceof Error
             ? error.message
-            : "Failed to update producer.",
+            : "Failed to update processing profile.",
       });
     }
   };
@@ -78,7 +78,7 @@ export default function ProducerDetailsPage() {
     return (
       <div className="p-4">
         <div className="mb-2 text-red-600 font-medium">
-          Invalid or missing producer id in the URL. Expected /producers/:id
+          Invalid or missing processing profile id in the URL. Expected /producers/:id
         </div>
       </div>
     );
@@ -89,11 +89,11 @@ export default function ProducerDetailsPage() {
       <div>
         <div className="flex justify-between items-center mb-4 mt-1">
           <div className="text-lg font-bold pl-1 text-dark-grey">
-            Producer Information
+            Processing Profile Information
           </div>
         </div>
         <Card>
-          <div className="animate-pulse p-6">Loading producer…</div>
+          <div className="animate-pulse p-6">Loading processing profile…</div>
         </Card>
       </div>
     );
@@ -103,10 +103,10 @@ export default function ProducerDetailsPage() {
     return (
       <ErrorBoundaryPage
         error={error}
-        title="Failed to load producer"
+        title="Failed to load processing profile"
         onReload={() => refetch()}
         onSecondaryClick={() => navigate("/producers")}
-        secondaryActionLabel="Back to Producers"
+        secondaryActionLabel="Back to Processing Profiles"
       />
     );
   }

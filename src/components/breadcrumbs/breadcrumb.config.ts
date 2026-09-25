@@ -26,14 +26,14 @@ interface BreadcrumbRouteConfig {
 export const BREADCRUMB_ROUTES: BreadcrumbRouteConfig[] = [
   { pattern: "/profile", crumbs: [{ label: "Profile" }] },
 
-  { pattern: "/corps", crumbs: [{ label: "Corps" }] },
+  { pattern: "/corps", crumbs: [{ label: "Companies" }] },
   {
     pattern: "/corps/create",
-    crumbs: [{ label: "Corps", to: "/corps" }, { label: "New Corp" }],
+    crumbs: [{ label: "Companies", to: "/corps" }, { label: "New Company" }],
   },
   {
     pattern: "/corps/:id",
-    crumbs: [{ label: "Corps", to: "/corps" }, { entity: "corp" }],
+    crumbs: [{ label: "Companies", to: "/corps" }, { entity: "corp" }],
   },
 
   { pattern: "/merchants", crumbs: [{ label: "Merchants" }] },
@@ -50,7 +50,7 @@ export const BREADCRUMB_ROUTES: BreadcrumbRouteConfig[] = [
     crumbs: [
       { label: "Merchants", to: "/merchants" },
       { entity: "merchant", to: "/merchants/:id" },
-      { label: "Associated Producers" },
+      { label: "Associated Processing Profiles" },
     ],
   },
   {
@@ -80,14 +80,14 @@ export const BREADCRUMB_ROUTES: BreadcrumbRouteConfig[] = [
     ],
   },
 
-  { pattern: "/producers", crumbs: [{ label: "Producers" }] },
+  { pattern: "/producers", crumbs: [{ label: "Processing Profiles" }] },
   {
     pattern: "/producers/create",
-    crumbs: [{ label: "Producers", to: "/producers" }, { label: "New Producer" }],
+    crumbs: [{ label: "Processing Profiles", to: "/producers" }, { label: "New Processing Profile" }],
   },
   {
     pattern: "/producers/:id",
-    crumbs: [{ label: "Producers", to: "/producers" }, { entity: "producer" }],
+    crumbs: [{ label: "Processing Profiles", to: "/producers" }, { entity: "producer" }],
   },
 
   { pattern: "/users", crumbs: [{ label: "Users" }] },

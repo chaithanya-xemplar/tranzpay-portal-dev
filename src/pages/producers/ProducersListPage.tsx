@@ -119,11 +119,11 @@ export function ProducersListPage() {
   const producerPageCustomColumns: ColumnDef<ProducerAccount>[] = [
     {
       accessorKey: "producerId",
-      header: "Producer ID",
+      header: "Processing Profile ID",
     },
     {
       accessorKey: "producerName",
-      header: "Producer Name",
+      header: "Processing Profile Name",
       cell: ({ row }) => {
         const producerId = row.original.producerId;
         const name = row.original.producerName;
@@ -143,7 +143,7 @@ export function ProducersListPage() {
     },
     {
       accessorKey: "corporateId",
-      header: "Corporate ID",
+      header: "Company ID",
     },
     {
       accessorKey: "ccProcessor",
@@ -163,7 +163,7 @@ export function ProducersListPage() {
   return (
     <div >
       <div className="flex justify-between items-center mb-3 ">
-        <div className="text-lg font-bold">Producer List</div>
+        <div className="text-lg font-bold">Processing Profile List</div>
         {/* <div>
           <Link to="/producers/create">
             <Button
@@ -182,7 +182,7 @@ export function ProducersListPage() {
       <GenericTable<ProducerAccount>
         queryKey={["producers-accounts"]}
         url="/api/v1/GetProducers"
-        title="All Producers"
+        title="All Processing Profiles"
         customColumns={producerPageCustomColumns}
         hiddenColumns={["mainProducerId", "ccPricing", "location", "corporateId", "integration"]}
         showStatusFilter

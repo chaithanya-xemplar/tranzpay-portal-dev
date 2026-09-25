@@ -38,7 +38,7 @@ import {
   toVisibilityMap,
   type TableColumnPref,
 } from "./columnPrefs";
-
+//test
 interface GenericTableProps<T extends Record<string, unknown>> {
   queryKey: QueryKey; 
   url?: string;  

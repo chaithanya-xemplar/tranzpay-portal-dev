@@ -44,13 +44,13 @@ export default function CreateProducersPage() {
 
     toast({
       variant: "success",
-      title: "Producer Created",
-      description: "Producer has been created successfully.",
+      title: "Processing Profile Created",
+      description: "Processing profile has been created successfully.",
     });
 
     navigate("/producers");
   } catch (error) {
-    let message = "Failed to create producer. Please try again.";
+    let message = "Failed to create processing profile. Please try again.";
 
     if (axios.isAxiosError<ApiErrorResponse>(error)) {
       message = error.response?.data?.detail ?? message;
@@ -78,7 +78,7 @@ export default function CreateProducersPage() {
             <Icon name="arrow-left" size={24} />
           </button>
           <span>
-            New Producer User
+            New Processing Profile
           </span>
         </div>
 

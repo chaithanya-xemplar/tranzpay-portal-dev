@@ -38,7 +38,7 @@ export default function MerchantDetailsPage() {
 
   const tabs = [
     { key: "info", label: "Merchant Info" },
-    { key: "producers", label: "Associated Producers" },
+    { key: "producers", label: "Associated Processing Profiles" },
     { key: "processors", label: "Processor Details" },
   ];
 
@@ -91,7 +91,7 @@ export default function MerchantDetailsPage() {
             icon="plus"
             iconPosition="left"
           >
-            New Producer
+            New Processing Profile
           </Button>
         </Link>
       </div>

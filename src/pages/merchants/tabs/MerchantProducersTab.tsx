@@ -70,7 +70,7 @@ export default function MerchantProducersTab() {
   const columns: ColumnDef<ProducerAccount>[] = [
     {
       accessorKey: "producerName",
-      header: "Producer Name",
+      header: "Processing Profile Name",
       cell: ({ row }) => (
         <Link
           to={`/producers/${row.original.producerId}`}
@@ -92,7 +92,7 @@ export default function MerchantProducersTab() {
       <GenericTable<ProducerAccount>
         queryKey={["producers-accounts", merchantId]}
         url={`/api/v1/Merchant/${merchantId}/Producers`}
-        title="List of associated producers"
+        title="List of associated processing profiles"
         customColumns={columns}
         hiddenColumns={["merchantName", "mainProducerId", "merchantId"]}
         showStatusFilter

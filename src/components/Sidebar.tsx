@@ -16,9 +16,9 @@ const Sidebar = ({ collapsed, setCollapsed}: { collapsed: boolean; setCollapsed:
       icon: adminSettingsIcon,
       children: [
         { label: "Accounts", path: "/accounts" },
-        { label: "Corps", path: "/corps" },
+        { label: "Companies", path: "/corps" },
         { label: "Merchants", path: "/merchants" },
-        { label: "Producers", path: "/producers" },
+        { label: "Processing Profiles", path: "/producers" },
         { label: "Users", path: "/users" },
         { label: "Processors", path: "/processors" },
         { label: "API Logs", path: "/api-logs" },
